@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+//   published Boolean @default(false)
+//   author    User?   @relation(fields: [authorId], references: [id])
+//   authorId  String?
+//   email     String?  @unique
+
+model Product {
+  id          String    @id @default(cuid())
+  name        String
+  description String?
+  price       String
+  quantity    String
+  brandId     String
+  categoryId  String
+  brand       Brand?    @relation(fields: [brandId], references: [id])
+  category    Category? @relation(fields: [categoryId], references: [id])
+  images      Image[]
+  size        Size[]
+  color       Color[]
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+}
+
+model Brand {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  Product     Product[]
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  title       String
+  description String?
+  Product     Product[]
+  createdAt   DateTime  @default(now()) @map(name: "created_at")
+  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+}
+
+model Color {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  productId   String?
+  Product     Product? @relation(fields: [productId], references: [id])
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+}
+
+model Size {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  productId   String?
+  Product     Product? @relation(fields: [productId], references: [id])
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
+}
+
+model Image {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  productId   String?
+  Product     Product? @relation(fields: [productId], references: [id])
+}
