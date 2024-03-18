@@ -22,9 +22,7 @@ const formSchemaCategory = z.object({
   title: z.string().min(1, {
     message: 'El titulo debe tener mínimo 1 carácter',
   }),
-  description: z
-    .string()
-    .optional(),
+  description: z.string().optional(),
 })
 
 export const FormCreateCategory = () => {
