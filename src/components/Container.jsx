@@ -1,5 +1,7 @@
 // import { cva } from "class-variance-authority"
 
+import { Toaster } from '@/components/ui/sonner'
+
 // const containerVariant = cva("max-w-7xl mx-auto")
 
 export const Container = ({ children, ...props }) => {
@@ -9,6 +11,11 @@ export const Container = ({ children, ...props }) => {
       // {...props}
     >
       {children}
+
+      <Toaster
+        position='bottom-right'
+        richColors
+      />
     </div>
   )
 }
