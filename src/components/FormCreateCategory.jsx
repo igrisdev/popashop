@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
+import { useState } from 'react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -23,13 +24,12 @@ const formSchemaCategory = z.object({
   }),
   description: z
     .string()
-    .min(1, {
-      message: 'La descripción debe tener mínimo 1 carácter',
-    })
     .optional(),
 })
 
 export const FormCreateCategory = () => {
+  const [loading, setLoading] = useState(false)
+
   const form = useForm({
     resolver: zodResolver(formSchemaCategory),
     defaultValues: {
@@ -38,15 +38,19 @@ export const FormCreateCategory = () => {
     },
   })
 
-  async function onSubmit(values) {
-    const res = await actionCreateCategory(values)
+  function onSubmit(values) {
+    setLoading(true)
+    const promises = actionCreateCategory(values)
 
-    if (!res.success) {
-      return toast.error(res.message)
-    }
-
-    toast.success(res.message)
-    form.reset()
+    toast.promise(promises, {
+      loading: 'Creando...',
+      success: (data) => {
+        form.reset()
+        setLoading(false)
+        return data.message
+      },
+      error: 'Error',
+    })
   }
 
   return (
@@ -88,7 +92,12 @@ export const FormCreateCategory = () => {
           )}
         />
 
-        <Button type='submit'>Crear Categoría</Button>
+        <Button
+          disabled={loading}
+          type='submit'
+        >
+          Crear Categoría
+        </Button>
       </form>
     </Form>
   )
