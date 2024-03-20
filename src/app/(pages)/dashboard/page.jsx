@@ -4,6 +4,7 @@ import { Plus } from 'lucide-react'
 import { DialogCreateProduct } from '@/components/creationActions/DialogCreateProduct'
 import { DialogCreateCategory } from '@/components/creationActions/DialogCreateCategory'
 import { DialogCreateBrand } from '@/components/creationActions/DialogCreateBrand'
+import { DialogCreateColor } from '@/components/creationActions/DialogCreateColor'
 
 const actions = [
   {
@@ -23,7 +24,7 @@ const actions = [
   {
     id: 3,
     title: 'Crear Color',
-    Component: DialogCreateBrand,
+    Component: DialogCreateColor,
     description: 'Añadir un nuevo color a la tienda online PopaShop',
     Icon: Plus,
   },
