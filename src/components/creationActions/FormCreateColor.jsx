@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import { actionCreateBrand } from '@/server/actions/actionBrand'
+import axios from '@/lib/axios'
 
 const formSchemaBrand = z.object({
   title: z.string().min(1, {
@@ -39,17 +39,20 @@ export const FormCreateColor = () => {
 
   function onSubmit(values) {
     setLoading(true)
-    const promises = actionCreateBrand(values)
+
+    const promises = axios.post('/api/color', values)
 
     toast.promise(promises, {
       loading: 'Creando...',
       success: (data) => {
         form.reset()
         setLoading(false)
-        return data.message
+        return data.data.message
       },
       error: 'Error',
     })
+
+    setLoading(false)
   }
 
   return (

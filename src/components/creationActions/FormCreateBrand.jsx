@@ -51,6 +51,7 @@ export const FormCreateBrand = () => {
       },
       error: 'Error',
     })
+
     setLoading(false)
   }
 
@@ -66,7 +67,7 @@ export const FormCreateBrand = () => {
         setLoading(false)
         return data.message
       },
-      error: 'Error al crear la Marca',
+      error: 'Error',
     })
   } */
 
