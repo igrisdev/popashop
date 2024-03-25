@@ -51,24 +51,9 @@ export const FormCreateBrand = () => {
       },
       error: 'Error',
     })
+
     setLoading(false)
   }
-
-  /*
-   function onSubmit(values) {
-    setLoading(true)
-    const promises = actionCreateBrand(values)
-
-    toast.promise(promises, {
-      loading: 'Creando...',
-      success: (data) => {
-        form.reset()
-        setLoading(false)
-        return data.message
-      },
-      error: 'Error',
-    })
-  } */
 
   return (
     <Form {...form}>

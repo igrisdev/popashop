@@ -16,7 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { actionCreateCategory } from '@/server/actions/actionsCategory'
+
+import axios from '@/lib/axios'
 
 const formSchemaCategory = z.object({
   title: z.string().min(1, {
@@ -38,17 +39,20 @@ export const FormCreateCategory = () => {
 
   function onSubmit(values) {
     setLoading(true)
-    const promises = actionCreateCategory(values)
+
+    const promises = axios.post('/api/category', values)
 
     toast.promise(promises, {
       loading: 'Creando...',
       success: (data) => {
         form.reset()
         setLoading(false)
-        return data.message
+        return data.data.message
       },
       error: 'Error',
     })
+
+    setLoading(false)
   }
 
   return (
