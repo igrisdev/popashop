@@ -23,6 +23,9 @@ const formSchemaBrand = z.object({
   title: z.string().min(1, {
     message: 'El titulo debe tener mínimo 1 carácter',
   }),
+  color: z.string().min(1, {
+    message: 'Debes elegir un color',
+  }),
   description: z.string().optional(),
 })
 
@@ -34,6 +37,7 @@ export const FormCreateColor = () => {
     defaultValues: {
       title: '',
       description: '',
+      color: '#f1f1f1',
     },
   })
 
@@ -69,7 +73,7 @@ export const FormCreateColor = () => {
               <FormLabel>Titulo</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='Nike, Iphone ...'
+                  placeholder='Rojo Oscuro, Verde ...'
                   {...field}
                 />
               </FormControl>
@@ -77,6 +81,23 @@ export const FormCreateColor = () => {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name='color'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Color</FormLabel>
+              <FormControl>
+                <Input
+                  type='color'
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name='description'
@@ -85,7 +106,7 @@ export const FormCreateColor = () => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='Marca de zapatos ...'
+                  placeholder='Este color es ...'
                   {...field}
                 />
               </FormControl>
