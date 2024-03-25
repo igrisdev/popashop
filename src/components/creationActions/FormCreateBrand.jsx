@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import { actionCreateBrand } from '@/server/actions/actionBrand'
+import axios from '@/lib/axios'
 
 const formSchemaBrand = z.object({
   title: z.string().min(1, {
@@ -39,6 +39,24 @@ export const FormCreateBrand = () => {
 
   function onSubmit(values) {
     setLoading(true)
+
+    const promises = axios.post('/api/brand', values)
+
+    toast.promise(promises, {
+      loading: 'Creando...',
+      success: (data) => {
+        form.reset()
+        setLoading(false)
+        return data.data.message
+      },
+      error: 'Error',
+    })
+    setLoading(false)
+  }
+
+  /*
+   function onSubmit(values) {
+    setLoading(true)
     const promises = actionCreateBrand(values)
 
     toast.promise(promises, {
@@ -50,7 +68,7 @@ export const FormCreateBrand = () => {
       },
       error: 'Error',
     })
-  }
+  } */
 
   return (
     <Form {...form}>
