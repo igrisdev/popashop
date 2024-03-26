@@ -51,25 +51,7 @@ export const FormCreateBrand = () => {
       },
       error: 'Error',
     })
-
-    setLoading(false)
   }
-
-  /*
-   function onSubmit(values) {
-    setLoading(true)
-    const promises = actionCreateBrand(values)
-
-    toast.promise(promises, {
-      loading: 'Creando...',
-      success: (data) => {
-        form.reset()
-        setLoading(false)
-        return data.message
-      },
-      error: 'Error',
-    })
-  } */
 
   return (
     <Form {...form}>
@@ -80,18 +62,20 @@ export const FormCreateBrand = () => {
         <FormField
           control={form.control}
           name='title'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Titulo</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder='Nike, Iphone ...'
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>Titulo</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder='Nike, Iphone ...'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
         />
         <FormField
           control={form.control}

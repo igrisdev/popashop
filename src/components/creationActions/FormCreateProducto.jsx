@@ -38,9 +38,10 @@ const formSchemaProduct = z.object({
     .string()
     .min(3, { message: 'La categoría debe ser mayor a 1.' })
     .optional(),
-  image: z.array(
-    z.string().url({ message: 'La imagen debe ser una URL válida.' }).optional()
-  ),
+  image: z
+    .object(z.string().url({ message: 'La imagen debe ser una URL válida.' }))
+    .array()
+    .optional(),
   size: z.array(
     z.string().min(1, { message: 'La talla debe ser mayor a 1.' }).optional()
   ),
@@ -96,6 +97,7 @@ export const FormCreateProducto = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-4'
+        encType='multipart/form-data'
       >
         <FormField
           control={form.control}
@@ -238,6 +240,8 @@ export const FormCreateProducto = () => {
                   type='file'
                   placeholder='URL de la imagen'
                   {...field}
+                  accept='.jpg, .jpeg, .png'
+                  multiple
                 />
               </FormControl>
               <FormMessage />
