@@ -55,8 +55,6 @@ export const FormCreateColor = () => {
       },
       error: 'Error',
     })
-
-    setLoading(false)
   }
 
   return (

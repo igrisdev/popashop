@@ -51,8 +51,6 @@ export const FormCreateCategory = () => {
       },
       error: 'Error al crear la Categoría',
     })
-
-    setLoading(false)
   }
 
   return (
