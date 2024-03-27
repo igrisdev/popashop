@@ -39,7 +39,7 @@ export const CreateImages = ({ loading, onChange, onRemove, value }) => {
       </div>
 
       <CldUploadWidget
-        uploadPreset='vsucuk0n'
+        uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}
         onSuccess={(result, { widget }) => {
           onChange(result?.info.secure_url)
           widget.close()
