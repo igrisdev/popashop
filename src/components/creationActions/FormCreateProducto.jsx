@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { SelectForm } from './SelectForm'
+import { CreateImages } from '../createImagesCloudinary/CreateImages'
 
 const formSchemaProduct = z.object({
   name: z.string().min(2, {
@@ -46,6 +47,8 @@ const formSchemaProduct = z.object({
 })
 
 export const FormCreateProducto = () => {
+  const [loading, setLoading] = useState(false)
+
   const [category, setCategory] = useState([
     { value: 'celular', label: 'Celular' },
     { value: 'reloj', label: 'Reloj' },
@@ -169,14 +172,13 @@ export const FormCreateProducto = () => {
           name='image'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Imágenes</FormLabel>
+              <FormLabel>Agregar Imágenes</FormLabel>
               <FormControl>
-                <Input
-                  type='file'
-                  placeholder='URL de la imagen'
-                  accept='.jpg, .jpeg, .png'
-                  multiple
-                  {...field}
+                <CreateImages
+                  value={field.value ? [field.value] : []}
+                  loading={loading}
+                  onChange={(url) => field.onChange(url)}
+                  onRemove={() => field.onChange('')}
                 />
               </FormControl>
               <FormMessage />
