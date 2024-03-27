@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FormCreateCategory } from './FormCreateCategory'
+import { FormCreateCategory } from '@/components/creationActions/FormCreateCategory'
 
 export const DialogCreateCategory = ({ title, description }) => {
   return (

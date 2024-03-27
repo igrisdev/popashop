@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { FormCreateColor } from './FormCreateColor'
+import { FormCreateColor } from '@/components/creationActions/FormCreateColor'
 
 export const DialogCreateColor = ({ title, description }) => {
   return (

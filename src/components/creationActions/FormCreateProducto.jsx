@@ -16,7 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { SelectForm } from './SelectForm'
+import { SelectForm } from '@/components/creationActions/SelectForm'
+import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
 
 const formSchemaProduct = z.object({
   name: z.string().min(2, {
@@ -30,27 +31,24 @@ const formSchemaProduct = z.object({
     .optional(),
   price: z.string().min(1, { message: 'El precio debe ser mayor a 1.' }),
   quantity: z.string().min(1, { message: 'La cantidad debe ser mayor a 1.' }),
-  brand: z
+  image: z.string().min(1, { message: 'Elige una imagen' }),
+
+  /* brand: z
     .string()
     .min(1, { message: 'La marca debe ser mayor a 1.' })
     .optional(),
-  category: z
-    .string()
-    .min(3, { message: 'La categoría debe ser mayor a 1.' })
-    .optional(),
-  image: z
-    .object(z.string().url({ message: 'La imagen debe ser una URL válida.' }))
-    .array()
-    .optional(),
+  category: z.string().min(3, { message: 'Elegir una categoría' }).optional(),
   size: z.array(
     z.string().min(1, { message: 'La talla debe ser mayor a 1.' }).optional()
   ),
   color: z.array(
     z.string().min(1, { message: 'El color debe ser mayor a 1.' }).optional()
-  ),
+  ), */
 })
 
 export const FormCreateProducto = () => {
+  const [loading, setLoading] = useState(false)
+
   const [category, setCategory] = useState([
     { value: 'celular', label: 'Celular' },
     { value: 'reloj', label: 'Reloj' },
@@ -80,11 +78,11 @@ export const FormCreateProducto = () => {
       description: '',
       price: '',
       quantity: '',
-      brand: '',
+      image: '',
+      /* brand: '',
       category: '',
-      image: [],
       size: [],
-      color: [],
+      color: [], */
     },
   })
 
@@ -97,7 +95,6 @@ export const FormCreateProducto = () => {
       <form
         onSubmit={form.handleSubmit(onSubmit)}
         className='space-y-4'
-        encType='multipart/form-data'
       >
         <FormField
           control={form.control}
@@ -115,6 +112,7 @@ export const FormCreateProducto = () => {
             </FormItem>
           )}
         />
+
         <FormField
           control={form.control}
           name='description'
@@ -131,6 +129,7 @@ export const FormCreateProducto = () => {
             </FormItem>
           )}
         />
+
         <div className='flex gap-x-2'>
           <FormField
             control={form.control}
@@ -167,7 +166,26 @@ export const FormCreateProducto = () => {
             )}
           />
         </div>
+
         <FormField
+          control={form.control}
+          name='image'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Agregar Imágenes</FormLabel>
+              <FormControl>
+                <CreateImages
+                  value={field.value ? [field.value] : []}
+                  loading={loading}
+                  onChange={(url) => field.onChange(url)}
+                  onRemove={() => field.onChange('')}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* <FormField
           control={form.control}
           name='brand'
           render={({ field }) => (
@@ -229,25 +247,7 @@ export const FormCreateProducto = () => {
           />
         </div>
 
-        <FormField
-          control={form.control}
-          name='image'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Imágenes</FormLabel>
-              <FormControl>
-                <Input
-                  type='file'
-                  placeholder='URL de la imagen'
-                  {...field}
-                  accept='.jpg, .jpeg, .png'
-                  multiple
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        */}
         <Button type='submit'>Crear Producto</Button>
       </form>
     </Form>
