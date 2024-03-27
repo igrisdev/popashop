@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { FormControl } from '../ui/form'
+import { FormControl } from '@/components/ui/form'
 
 export const SelectForm = ({ field, options }) => {
   return (

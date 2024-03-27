@@ -7,7 +7,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FormCreateProducto } from './FormCreateProducto'
+import { FormCreateProducto } from '@/components/creationActions/FormCreateProducto'
 
 export const DialogCreateProduct = ({ title, description }) => {
   const handlePointerEvents = () => {

@@ -16,8 +16,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { SelectForm } from './SelectForm'
-import { CreateImages } from '../createImagesCloudinary/CreateImages'
+import { SelectForm } from '@/components/creationActions/SelectForm'
+import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
 
 const formSchemaProduct = z.object({
   name: z.string().min(2, {
