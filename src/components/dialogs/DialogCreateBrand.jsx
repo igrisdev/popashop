@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 
-import { FormCreateBrand } from '@/components/creationActions/FormCreateBrand'
+import { FormCreateBrand } from '@/components/forms/FormCreateBrand'
 
 export const DialogCreateBrand = ({ title, description }) => {
   return (

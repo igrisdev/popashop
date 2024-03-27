@@ -16,7 +16,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { SelectForm } from '@/components/creationActions/SelectForm'
+import { SelectForm } from '@/components/forms/SelectForm'
 import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
 
 const formSchemaProduct = z.object({
@@ -31,7 +31,11 @@ const formSchemaProduct = z.object({
     .optional(),
   price: z.string().min(1, { message: 'El precio debe ser mayor a 1.' }),
   quantity: z.string().min(1, { message: 'La cantidad debe ser mayor a 1.' }),
-  image: z.string().min(1, { message: 'Elige una imagen' }),
+  image: z
+    .object({
+      url: z.string(),
+    })
+    .array(),
 
   /* brand: z
     .string()
@@ -78,7 +82,7 @@ export const FormCreateProducto = () => {
       description: '',
       price: '',
       quantity: '',
-      image: '',
+      image: [],
       /* brand: '',
       category: '',
       size: [],

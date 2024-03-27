@@ -7,13 +7,24 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FormCreateCategory } from '@/components/creationActions/FormCreateCategory'
+import { FormCreateProducto } from '@/components/forms/FormCreateProducto'
 
-export const DialogCreateCategory = ({ title, description }) => {
+export const DialogCreateProduct = ({ title, description }) => {
+  const handlePointerEvents = () => {
+    setTimeout(() => {
+      document.body.style.pointerEvents = 'auto'
+    }, 300)
+  }
+
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant='outline'>{title}</Button>
+        <Button
+          variant='outline'
+          onClick={handlePointerEvents}
+        >
+          {title}
+        </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[525px]'>
         <DialogHeader>
@@ -21,7 +32,7 @@ export const DialogCreateCategory = ({ title, description }) => {
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        <FormCreateCategory />
+        <FormCreateProducto />
       </DialogContent>
     </Dialog>
   )

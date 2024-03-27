@@ -39,6 +39,7 @@ export const CreateImages = ({ loading, onChange, onRemove, value }) => {
       </div>
 
       <CldUploadWidget
+        options={{ multiple: true }}
         uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}
         onSuccess={(result, { widget }) => {
           onChange(result?.info.secure_url)

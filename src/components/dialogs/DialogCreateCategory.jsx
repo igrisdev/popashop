@@ -7,10 +7,9 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { FormCreateCategory } from '@/components/forms/FormCreateCategory'
 
-import { FormCreateColor } from '@/components/creationActions/FormCreateColor'
-
-export const DialogCreateColor = ({ title, description }) => {
+export const DialogCreateCategory = ({ title, description }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -22,7 +21,7 @@ export const DialogCreateColor = ({ title, description }) => {
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        <FormCreateColor />
+        <FormCreateCategory />
       </DialogContent>
     </Dialog>
   )

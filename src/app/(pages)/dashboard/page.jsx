@@ -1,10 +1,10 @@
 'use client'
 
 import { Plus } from 'lucide-react'
-import { DialogCreateProduct } from '@/components/creationActions/DialogCreateProduct'
-import { DialogCreateCategory } from '@/components/creationActions/DialogCreateCategory'
-import { DialogCreateBrand } from '@/components/creationActions/DialogCreateBrand'
-import { DialogCreateColor } from '@/components/creationActions/DialogCreateColor'
+import { DialogCreateProduct } from '@/components/dialogs/DialogCreateProduct'
+import { DialogCreateCategory } from '@/components/dialogs/DialogCreateCategory'
+import { DialogCreateBrand } from '@/components/dialogs/DialogCreateBrand'
+import { DialogCreateColor } from '@/components/dialogs/DialogCreateColor'
 
 const actions = [
   {

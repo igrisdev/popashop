@@ -7,24 +7,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { FormCreateProducto } from '@/components/creationActions/FormCreateProducto'
 
-export const DialogCreateProduct = ({ title, description }) => {
-  const handlePointerEvents = () => {
-    setTimeout(() => {
-      document.body.style.pointerEvents = 'auto'
-    }, 300)
-  }
+import { FormCreateColor } from '@/components/forms/FormCreateColor'
 
+export const DialogCreateColor = ({ title, description }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          variant='outline'
-          onClick={handlePointerEvents}
-        >
-          {title}
-        </Button>
+        <Button variant='outline'>{title}</Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[525px]'>
         <DialogHeader>
@@ -32,7 +22,7 @@ export const DialogCreateProduct = ({ title, description }) => {
           <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
 
-        <FormCreateProducto />
+        <FormCreateColor />
       </DialogContent>
     </Dialog>
   )
