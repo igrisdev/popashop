@@ -40,10 +40,10 @@ const actions = [
 export default function dashboard() {
   return (
     <div>
-      <section className='flex justify-between'>
+      <section className='flex flex-col sm:flex-row justify-between gap-2'>
         <h3>Acciones de creación</h3>
 
-        <ul className='flex gap-x-2'>
+        <ul className='flex gap-2 flex-wrap'>
           {actions.map((action) => (
             <li key={action.id}>
               <action.Component {...action} />
