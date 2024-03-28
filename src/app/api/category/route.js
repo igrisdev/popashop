@@ -43,15 +43,12 @@ export async function GET() {
 
     if (!result)
       return NextResponse.json(
-        { message: 'No se encontraron categorías' },
+        { error: 'No se encontraron categorías' },
         { status: 400 }
       )
 
     return NextResponse.json(result, { status: 200 })
   } catch (error) {
-    return NextResponse.json.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    )
+    return NextResponse.json.json({ error: 'Error Interno' }, { status: 500 })
   }
 }

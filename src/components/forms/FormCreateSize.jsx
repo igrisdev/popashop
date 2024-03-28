@@ -49,7 +49,10 @@ export const FormCreateSize = () => {
         setLoading(false)
         return data.data.message
       },
-      error: 'Error al crear el Tamaño',
+      error: (err) => {
+        setLoading(false)
+        return err.response.data.error
+      },
     })
   }
 

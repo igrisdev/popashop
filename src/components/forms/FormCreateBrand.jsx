@@ -49,7 +49,10 @@ export const FormCreateBrand = () => {
         setLoading(false)
         return data.data.message
       },
-      error: 'Error',
+      error: (err) => {
+        setLoading(false)
+        return err.response.data.error
+      },
     })
   }
 

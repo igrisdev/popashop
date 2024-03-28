@@ -16,7 +16,7 @@ export async function POST(request) {
 
     if (!result.id)
       return NextResponse.json(
-        { message: 'Error al crear el color' },
+        { error: 'Error al crear el color' },
         { status: 500 }
       )
 
@@ -25,10 +25,7 @@ export async function POST(request) {
       { status: 200 }
     )
   } catch (error) {
-    return NextResponse.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Error Interno' }, { status: 500 })
   }
 }
 
