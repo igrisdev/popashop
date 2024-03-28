@@ -3,62 +3,61 @@
 import Image from 'next/image'
 
 import { CldUploadWidget } from 'next-cloudinary'
-import { Trash, ImagePlus } from 'lucide-react'
+import { ImagePlus, Trash } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
 export const CreateImages = ({ loading, onChange, onRemove, value }) => {
-  console.log(value)
+  const onUpload = (result) => {
+    onChange(result.info.secure_url)
+  }
+
   return (
     <div>
-      <div className='mb-4 flex items-center gap-4'>
+      <div className='mb-4 flex items-center flex-wrap gap-4 max-h-[200px] overflow-auto'>
         {value.map((url) => (
           <div
             key={url}
-            className='relative size-[200px] rounded-md overflow-hidden'
+            className='relative w-[200px] h-[200px] rounded-md overflow-hidden'
           >
-            <div className='z-10 absolute top-2 ring-2'>
+            <div className='z-10 absolute top-2 right-2'>
               <Button
                 type='button'
                 onClick={() => onRemove(url)}
                 variant='destructive'
+                size='sm'
               >
-                <Trash className='size-4' />
+                <Trash className='h-4 w-4' />
               </Button>
             </div>
-
             <Image
+              fill
+              className='object-cover'
+              alt='Image'
               src={url}
-              alt='image'
-              width={200}
-              height={200}
-              className='object-cover overflow-hidden w-[200px] h-[200px]'
             />
           </div>
         ))}
       </div>
 
       <CldUploadWidget
-        options={{ multiple: true }}
+        onUpload={onUpload}
         uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_PRESET}
-        onSuccess={(result, { widget }) => {
-          onChange(result?.info.secure_url)
-          widget.close()
-        }}
       >
         {({ open }) => {
-          function handleOnClick() {
-            onChange(undefined)
+          const onClick = () => {
             open()
           }
+
           return (
             <Button
               type='button'
+              loading={loading}
               variant='secondary'
-              disabled={loading}
-              onClick={handleOnClick}
+              onClick={onClick}
             >
-              <ImagePlus className='size-4 mr-2' />
+              <ImagePlus className='h-4 w-4 mr-2' />
+              Agregar Imagen
             </Button>
           )
         }}

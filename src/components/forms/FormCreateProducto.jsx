@@ -31,7 +31,7 @@ const formSchemaProduct = z.object({
     .optional(),
   price: z.string().min(1, { message: 'El precio debe ser mayor a 1.' }),
   quantity: z.string().min(1, { message: 'La cantidad debe ser mayor a 1.' }),
-  image: z
+  images: z
     .object({
       url: z.string(),
     })
@@ -82,7 +82,7 @@ export const FormCreateProducto = () => {
       description: '',
       price: '',
       quantity: '',
-      image: [],
+      images: [],
       /* brand: '',
       category: '',
       size: [],
@@ -173,16 +173,20 @@ export const FormCreateProducto = () => {
 
         <FormField
           control={form.control}
-          name='image'
+          name='images'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Agregar Imágenes</FormLabel>
               <FormControl>
                 <CreateImages
-                  value={field.value ? [field.value] : []}
-                  loading={loading}
-                  onChange={(url) => field.onChange(url)}
-                  onRemove={() => field.onChange('')}
+                  value={field.value.map((image) => image.url)}
+                  disabled={loading}
+                  onChange={(url) => field.onChange([...field.value, { url }])}
+                  onRemove={(url) =>
+                    field.onChange([
+                      ...field.value.filter((current) => current.url !== url),
+                    ])
+                  }
                 />
               </FormControl>
               <FormMessage />
