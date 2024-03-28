@@ -18,9 +18,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
-import { SelectForm } from '@/components/forms/SelectForm'
 
 import axios from '@/lib/axios'
 
@@ -153,10 +159,31 @@ export const FormCreateProducto = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Marca</FormLabel>
-              <SelectForm
-                options={brands}
-                field={field}
-              />
+              <Select
+                disabled={loading}
+                onValueChange={field.onChange}
+                value={field.value}
+                defaultValue={field.value}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue
+                      defaultValue={field.value}
+                      placeholder='Seleccionar Marca'
+                    />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {brands.map(({ id, title }) => (
+                    <SelectItem
+                      key={id}
+                      value={id}
+                    >
+                      {title}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
