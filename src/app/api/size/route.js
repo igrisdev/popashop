@@ -15,7 +15,7 @@ export async function POST(request) {
 
     if (!result.id)
       return NextResponse.json(
-        { message: 'Error al crear el tamaño' },
+        { error: 'Error al crear el tamaño' },
         { status: 400 }
       )
 
@@ -24,10 +24,7 @@ export async function POST(request) {
       { status: 201 }
     )
   } catch (error) {
-    return NextResponse.json.json(
-      { error: 'Internal Server Error' },
-      { status: 500 }
-    )
+    return NextResponse.json.json({ error: 'Error Interno' }, { status: 500 })
   }
 }
 

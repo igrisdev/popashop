@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  // previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
@@ -15,20 +14,19 @@ datasource db {
 //   email     String?  @unique
 
 model Product {
-  id          String    @id @default(cuid())
+  id          String     @id @default(cuid())
   name        String
   description String?
-  price       String
-  quantity    String
-  brandId     String
-  categoryId  String
-  brand       Brand?    @relation(fields: [brandId], references: [id])
-  category    Category? @relation(fields: [categoryId], references: [id])
+  price       String?
+  quantity    String?
+  brandId     String?
+  brand       Brand?     @relation(fields: [brandId], references: [id])
+  category    Category[]
   images      Image[]
   size        Size[]
   color       Color[]
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+  createdAt   DateTime   @default(now()) @map(name: "created_at")
+  updatedAt   DateTime   @updatedAt @map(name: "updated_at")
 }
 
 model Brand {
@@ -41,13 +39,14 @@ model Brand {
 }
 
 model Category {
-  id          String    @id @default(cuid())
+  id          String   @id @default(cuid())
   title       String
   description String?
-  Product     Product[]
   Size        Size[]
-  createdAt   DateTime  @default(now()) @map(name: "created_at")
-  updatedAt   DateTime  @updatedAt @map(name: "updated_at")
+  productId   String?
+  Product     Product? @relation(fields: [productId], references: [id])
+  createdAt   DateTime @default(now()) @map(name: "created_at")
+  updatedAt   DateTime @updatedAt @map(name: "updated_at")
 }
 
 model Color {
@@ -74,9 +73,10 @@ model Size {
 }
 
 model Image {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  productId   String?
-  Product     Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id        String   @id @default(cuid())
+  url       String
+  productId String?
+  Product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  updatedAt DateTime @updatedAt @map(name: "updated_at")
 }

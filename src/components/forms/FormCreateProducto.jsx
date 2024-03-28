@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -35,12 +36,13 @@ const formSchemaProduct = z.object({
     .optional(),
   price: z.string().min(1, { message: 'El precio debe ser mayor a 1.' }),
   quantity: z.string().min(1, { message: 'La cantidad debe ser mayor a 1.' }),
-  brands: z.string().min(1, { message: 'Debes elegir una marca' }),
+  brandId: z.string().min(1, { message: 'Debes elegir una marca' }),
   images: z
     .object({
       url: z.string(),
     })
-    .array(),
+    .array()
+    .min(1, { message: 'Se requiere al menos una imagen' }),
   categories: z
     .array(z.string())
     .refine((value) => value.some((item) => item), {
@@ -66,7 +68,7 @@ export const FormCreateProducto = () => {
       description: '',
       price: '',
       quantity: '',
-      brands: '',
+      brandId: '',
       images: [],
       categories: [],
       sizes: [],
@@ -106,7 +108,20 @@ export const FormCreateProducto = () => {
   }, [])
 
   function onSubmit(values) {
-    console.log(values)
+    const promises = axios.post('/api/product', values)
+
+    toast.promise(promises, {
+      loading: 'Creando...',
+      success: (data) => {
+        setLoading(false)
+        form.reset()
+        return data.data.message
+      },
+      error: (err) => {
+        setLoading(false)
+        return err.response.data.error
+      },
+    })
   }
 
   return (
@@ -134,7 +149,7 @@ export const FormCreateProducto = () => {
 
         <FormField
           control={form.control}
-          name='brands'
+          name='brandId'
           render={({ field }) => (
             <FormItem>
               <FormLabel>Marca</FormLabel>
@@ -246,16 +261,13 @@ export const FormCreateProducto = () => {
                         >
                           <FormControl>
                             <Checkbox
-                              checked={field.value?.includes(`${id},${title}`)}
+                              checked={field.value?.includes(id)}
                               onCheckedChange={(checked) => {
                                 return checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      `${id},${title}`,
-                                    ])
+                                  ? field.onChange([...field.value, id])
                                   : field.onChange(
                                       field.value?.filter(
-                                        (value) => value !== `${id},${title}`
+                                        (value) => value !== id
                                       )
                                     )
                               }}
@@ -293,16 +305,13 @@ export const FormCreateProducto = () => {
                         >
                           <FormControl>
                             <Checkbox
-                              checked={field.value?.includes(`${id},${title}`)}
+                              checked={field.value?.includes(id)}
                               onCheckedChange={(checked) => {
                                 return checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      `${id},${title}`,
-                                    ])
+                                  ? field.onChange([...field.value, id])
                                   : field.onChange(
                                       field.value?.filter(
-                                        (value) => value !== `${id},${title}`
+                                        (value) => value !== id
                                       )
                                     )
                               }}
@@ -342,16 +351,13 @@ export const FormCreateProducto = () => {
                         >
                           <FormControl>
                             <Checkbox
-                              checked={field.value?.includes(`${id},${size}`)}
+                              checked={field.value?.includes(id)}
                               onCheckedChange={(checked) => {
                                 return checked
-                                  ? field.onChange([
-                                      ...field.value,
-                                      `${id},${size}`,
-                                    ])
+                                  ? field.onChange([...field.value, id])
                                   : field.onChange(
                                       field.value?.filter(
-                                        (value) => value !== `${id},${size}`
+                                        (value) => value !== id
                                       )
                                     )
                               }}

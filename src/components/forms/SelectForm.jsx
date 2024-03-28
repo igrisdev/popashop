@@ -21,7 +21,7 @@ export const SelectForm = ({ options, field }) => {
         {options.map((option) => (
           <SelectItem
             key={option?.id}
-            value={option?.title}
+            value={option?.id}
           >
             {option?.title}
           </SelectItem>
