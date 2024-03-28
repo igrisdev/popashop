@@ -31,33 +31,27 @@ export async function POST(request) {
   }
 }
 
-export async function GET(request) {
-  /* const { searchParams } = new URL(request.url)
-  const title = searchParams.get('title')
-
-  const result = await prisma.brand.findMany({
-    where: {
-      title: {
-        contains: title,
-      },
-    },
-  }) */
-
-  return NextResponse.json('ff', { status: 200 })
-  /* try {
+export async function GET() {
+  try {
     const result = await prisma.brand.findMany({
-      where: {
-        title: {
-          contains: title,
-        },
+      select: {
+        id: true,
+        title: true,
+        description: true,
       },
     })
 
+    if (!result)
+      return NextResponse.json(
+        { message: 'No se encontraron marcas' },
+        { status: 400 }
+      )
+
     return NextResponse.json(result, { status: 200 })
   } catch (error) {
-    return NextResponse.json(
+    return NextResponse.json.json(
       { error: 'Internal Server Error' },
       { status: 500 }
     )
-  } */
+  }
 }

@@ -8,6 +8,7 @@ import { useForm } from 'react-hook-form'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Checkbox } from '@/components/ui/checkbox'
 import {
   Form,
   FormControl,
@@ -16,8 +17,9 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Checkbox } from '@/components/ui/checkbox'
+
 import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
+import { SelectForm } from '@/components/forms/SelectForm'
 
 import axios from '@/lib/axios'
 
@@ -33,6 +35,7 @@ const formSchemaProduct = z.object({
     .optional(),
   price: z.string().min(1, { message: 'El precio debe ser mayor a 1.' }),
   quantity: z.string().min(1, { message: 'La cantidad debe ser mayor a 1.' }),
+  brands: z.string().min(1, { message: 'Debes elegir una marca' }),
   images: z
     .object({
       url: z.string(),
@@ -47,11 +50,6 @@ const formSchemaProduct = z.object({
   colors: z.array(z.string()).refine((value) => value.some((item) => item), {
     message: 'Seleccionar un color como mínimo',
   }),
-
-  /* brand: z
-    .string()
-    .min(1, { message: 'La marca debe ser mayor a 1.' })
-    .optional(), */
 })
 
 export const FormCreateProducto = () => {
@@ -59,6 +57,7 @@ export const FormCreateProducto = () => {
   const [categories, setCategories] = useState([])
   const [sizes, setSizes] = useState([])
   const [colors, setColors] = useState([])
+  const [brands, setBrands] = useState([])
 
   const form = useForm({
     resolver: zodResolver(formSchemaProduct),
@@ -67,11 +66,11 @@ export const FormCreateProducto = () => {
       description: '',
       price: '',
       quantity: '',
+      brands: '',
       images: [],
       categories: [],
       sizes: [],
       colors: [],
-      //  brand: '',
     },
   })
 
@@ -93,10 +92,17 @@ export const FormCreateProducto = () => {
     setColors(res.data)
   }
 
+  const getBrands = async () => {
+    const res = await axios.get('/api/brand')
+
+    setBrands(res.data)
+  }
+
   useEffect(() => {
     getCategories()
     getSizes()
     getColors()
+    getBrands()
   }, [])
 
   function onSubmit(values) {
@@ -121,6 +127,21 @@ export const FormCreateProducto = () => {
                   {...field}
                 />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name='brands'
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Marca</FormLabel>
+              <SelectForm
+                options={brands}
+                field={field}
+              />
               <FormMessage />
             </FormItem>
           )}
