@@ -53,28 +53,6 @@ const formSchemaProduct = z.object({
 export const FormCreateProducto = () => {
   const [loading, setLoading] = useState(false)
 
-  const [category, setCategory] = useState([
-    { value: 'celular', label: 'Celular' },
-    { value: 'reloj', label: 'Reloj' },
-    { value: 'accesorio', label: 'Accesorio' },
-  ])
-
-  const [size, setSize] = useState([
-    { value: 's', label: 'S' },
-    { value: 'm', label: 'M' },
-    { value: 'l', label: 'L' },
-    { value: 'xl', label: 'XL' },
-    { value: 'xxl', label: 'XXL' },
-    { value: 'xxxl', label: 'XXXL' },
-  ])
-
-  const [color, setColor] = useState([
-    { value: 'rojo', label: 'Rojo', color: 'red' },
-    { value: 'azul', label: 'Azul', color: 'blue' },
-    { value: 'verde', label: 'Verde', color: 'green' },
-    { value: 'amarillo', label: 'Amarillo', color: 'yellow' },
-  ])
-
   const form = useForm({
     resolver: zodResolver(formSchemaProduct),
     defaultValues: {
@@ -193,69 +171,7 @@ export const FormCreateProducto = () => {
             </FormItem>
           )}
         />
-        {/* <FormField
-          control={form.control}
-          name='brand'
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Marca</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder='Marca del producto'
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className='flex gap-x-2 justify-between'>
-          <FormField
-            control={form.control}
-            name='category'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Categoría</FormLabel>
-                <SelectForm
-                  field={field}
-                  options={category}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='size'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Talla del producto</FormLabel>
-                <SelectForm
-                  field={field}
-                  options={size}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='color'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Color</FormLabel>
-                <SelectForm
-                  field={field}
-                  options={color}
-                />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        */}
+        
         <Button type='submit'>Crear Producto</Button>
       </form>
     </Form>
