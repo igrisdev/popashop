@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -16,8 +16,10 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { SelectForm } from '@/components/forms/SelectForm'
+import { Checkbox } from '@/components/ui/checkbox'
 import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
+
+import axios from '@/lib/axios'
 
 const formSchemaProduct = z.object({
   name: z.string().min(2, {
@@ -36,22 +38,27 @@ const formSchemaProduct = z.object({
       url: z.string(),
     })
     .array(),
+  categories: z
+    .array(z.string())
+    .refine((value) => value.some((item) => item), {
+      message: 'Seleccionar una categoría como mínimo',
+    }),
+  sizes: z.array(z.string()).optional(),
+  colors: z.array(z.string()).refine((value) => value.some((item) => item), {
+    message: 'Seleccionar un color como mínimo',
+  }),
 
   /* brand: z
     .string()
     .min(1, { message: 'La marca debe ser mayor a 1.' })
-    .optional(),
-  category: z.string().min(3, { message: 'Elegir una categoría' }).optional(),
-  size: z.array(
-    z.string().min(1, { message: 'La talla debe ser mayor a 1.' }).optional()
-  ),
-  color: z.array(
-    z.string().min(1, { message: 'El color debe ser mayor a 1.' }).optional()
-  ), */
+    .optional(), */
 })
 
 export const FormCreateProducto = () => {
   const [loading, setLoading] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [sizes, setSizes] = useState([])
+  const [colors, setColors] = useState([])
 
   const form = useForm({
     resolver: zodResolver(formSchemaProduct),
@@ -61,12 +68,36 @@ export const FormCreateProducto = () => {
       price: '',
       quantity: '',
       images: [],
-      /* brand: '',
-      category: '',
-      size: [],
-      color: [], */
+      categories: [],
+      sizes: [],
+      colors: [],
+      //  brand: '',
     },
   })
+
+  const getCategories = async () => {
+    const res = await axios.get('/api/category')
+
+    setCategories(res.data)
+  }
+
+  const getSizes = async () => {
+    const res = await axios.get('/api/size')
+
+    setSizes(res.data)
+  }
+
+  const getColors = async () => {
+    const res = await axios.get('/api/color')
+
+    setColors(res.data)
+  }
+
+  useEffect(() => {
+    getCategories()
+    getSizes()
+    getColors()
+  }, [])
 
   function onSubmit(values) {
     console.log(values)
@@ -154,7 +185,7 @@ export const FormCreateProducto = () => {
           name='images'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Agregar Imágenes</FormLabel>
+              <FormLabel>Imágenes</FormLabel>
               <FormControl>
                 <CreateImages
                   value={field.value.map((image) => image.url)}
@@ -171,7 +202,152 @@ export const FormCreateProducto = () => {
             </FormItem>
           )}
         />
-        
+
+        <div className='flex justify-between'>
+          <FormField
+            control={form.control}
+            name='categories'
+            render={() => (
+              <FormItem>
+                <div className='mb-4'>
+                  <FormLabel>Categorías</FormLabel>
+                </div>
+                {categories.map(({ id, title }) => (
+                  <FormField
+                    key={id}
+                    control={form.control}
+                    name='categories'
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={id}
+                          className='flex flex-row items-start space-x-3 space-y-0'
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(`${id},${title}`)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      `${id},${title}`,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== `${id},${title}`
+                                      )
+                                    )
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className='font-normal'>{title}</FormLabel>
+                        </FormItem>
+                      )
+                    }}
+                  />
+                ))}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='colors'
+            render={() => (
+              <FormItem>
+                <div className='mb-4'>
+                  <FormLabel>Colores</FormLabel>
+                </div>
+                {colors.map(({ id, title }) => (
+                  <FormField
+                    key={id}
+                    control={form.control}
+                    name='colors'
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={id}
+                          className='flex flex-row items-start space-x-3 space-y-0'
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(`${id},${title}`)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      `${id},${title}`,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== `${id},${title}`
+                                      )
+                                    )
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className='font-normal'>{title}</FormLabel>
+                        </FormItem>
+                      )
+                    }}
+                  />
+                ))}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name='sizes'
+            render={() => (
+              <FormItem>
+                <div className='mb-4'>
+                  <FormLabel>
+                    Tamaños <span className='text-[10px]'>(opcional)</span>
+                  </FormLabel>
+                </div>
+                {sizes.map(({ id, size }) => (
+                  <FormField
+                    key={id}
+                    control={form.control}
+                    name='sizes'
+                    render={({ field }) => {
+                      return (
+                        <FormItem
+                          key={id}
+                          className='flex flex-row items-start space-x-3 space-y-0'
+                        >
+                          <FormControl>
+                            <Checkbox
+                              checked={field.value?.includes(`${id},${size}`)}
+                              onCheckedChange={(checked) => {
+                                return checked
+                                  ? field.onChange([
+                                      ...field.value,
+                                      `${id},${size}`,
+                                    ])
+                                  : field.onChange(
+                                      field.value?.filter(
+                                        (value) => value !== `${id},${size}`
+                                      )
+                                    )
+                              }}
+                            />
+                          </FormControl>
+                          <FormLabel className='font-normal'>{size}</FormLabel>
+                        </FormItem>
+                      )
+                    }}
+                  />
+                ))}
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
         <Button type='submit'>Crear Producto</Button>
       </form>
     </Form>

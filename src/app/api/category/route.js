@@ -16,13 +16,38 @@ export async function POST(request) {
     if (!result.id)
       return NextResponse.json(
         { message: 'Error al crear la categoría' },
-        { status: 500 }
+        { status: 400 }
       )
 
     return NextResponse.json(
       { message: 'Categoría creada correctamente' },
-      { status: 200 }
+      { status: 201 }
     )
+  } catch (error) {
+    return NextResponse.json.json(
+      { error: 'Internal Server Error' },
+      { status: 500 }
+    )
+  }
+}
+
+export async function GET() {
+  try {
+    const result = await prisma.category.findMany({
+      select: {
+        id: true,
+        title: true,
+        description: true,
+      },
+    })
+
+    if (!result)
+      return NextResponse.json(
+        { message: 'No se encontraron categorías' },
+        { status: 400 }
+      )
+
+    return NextResponse.json(result, { status: 200 })
   } catch (error) {
     return NextResponse.json.json(
       { error: 'Internal Server Error' },

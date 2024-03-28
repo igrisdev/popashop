@@ -1,6 +1,6 @@
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["jsonProtocol"]
+  provider = "prisma-client-js"
+  // previewFeatures = ["jsonProtocol"]
 }
 
 datasource db {
@@ -63,7 +63,7 @@ model Color {
 
 model Size {
   id          String    @id @default(cuid())
-  title       String
+  size        String
   description String?
   productId   String?
   categoryId  String?

@@ -19,20 +19,20 @@ import {
 
 import axios from '@/lib/axios'
 
-const formSchemaCategory = z.object({
-  title: z.string().min(1, {
-    message: 'El titulo debe tener mínimo 1 carácter',
+const formSchemaSize = z.object({
+  size: z.string().min(1, {
+    message: 'El tamaño debe tener mínimo 1 carácter',
   }),
   description: z.string().optional(),
 })
 
-export const FormCreateCategory = () => {
+export const FormCreateSize = () => {
   const [loading, setLoading] = useState(false)
 
   const form = useForm({
-    resolver: zodResolver(formSchemaCategory),
+    resolver: zodResolver(formSchemaSize),
     defaultValues: {
-      title: '',
+      size: '',
       description: '',
     },
   })
@@ -40,7 +40,7 @@ export const FormCreateCategory = () => {
   function onSubmit(values) {
     setLoading(true)
 
-    const promises = axios.post('/api/category', values)
+    const promises = axios.post('/api/size', values)
 
     toast.promise(promises, {
       loading: 'Creando...',
@@ -49,7 +49,7 @@ export const FormCreateCategory = () => {
         setLoading(false)
         return data.data.message
       },
-      error: 'Error al crear la Categoría',
+      error: 'Error al crear el Tamaño',
     })
   }
 
@@ -61,13 +61,13 @@ export const FormCreateCategory = () => {
       >
         <FormField
           control={form.control}
-          name='title'
+          name='size'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Titulo</FormLabel>
+              <FormLabel>Tamaño</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='Celular, Computador ...'
+                  placeholder='S, M, L, XL ...'
                   {...field}
                 />
               </FormControl>
@@ -83,7 +83,7 @@ export const FormCreateCategory = () => {
               <FormLabel>Description</FormLabel>
               <FormControl>
                 <Input
-                  placeholder='Marca para la ...'
+                  placeholder='Talla para la ...'
                   {...field}
                 />
               </FormControl>
@@ -96,7 +96,7 @@ export const FormCreateCategory = () => {
           disabled={loading}
           type='submit'
         >
-          Crear Categoría
+          Crear Tamaño
         </Button>
       </form>
     </Form>

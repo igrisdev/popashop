@@ -5,6 +5,7 @@ import { DialogCreateProduct } from '@/components/dialogs/DialogCreateProduct'
 import { DialogCreateCategory } from '@/components/dialogs/DialogCreateCategory'
 import { DialogCreateBrand } from '@/components/dialogs/DialogCreateBrand'
 import { DialogCreateColor } from '@/components/dialogs/DialogCreateColor'
+import { DialogCreateSize } from '@/components/dialogs/DialogCreateSize'
 
 const actions = [
   {
@@ -33,6 +34,13 @@ const actions = [
     title: 'Crear Marca',
     Component: DialogCreateBrand,
     description: 'Añadir una nueva marca a la tienda online PopaShop',
+    Icon: Plus,
+  },
+  {
+    id: 5,
+    title: 'Crear Tamaño',
+    Component: DialogCreateSize,
+    description: 'Añadir un nuevo tamaño a la tienda online PopaShop',
     Icon: Plus,
   },
 ]
