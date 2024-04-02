@@ -1,15 +1,9 @@
-// import { cva } from "class-variance-authority"
-
+import { cn } from '@/lib/utils'
 import { Toaster } from '@/components/ui/sonner'
 
-// const containerVariant = cva("max-w-7xl mx-auto")
-
-export const Container = ({ children, ...props }) => {
+export const Container = ({ children, className }) => {
   return (
-    <div
-      className='max-w-7xl mx-auto px-2 xl:px-0'
-      // {...props}
-    >
+    <div className={cn('max-w-7xl mx-auto px-2 xl:px-0', className)}>
       {children}
 
       <Toaster

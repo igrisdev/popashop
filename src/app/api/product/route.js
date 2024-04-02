@@ -58,17 +58,11 @@ export async function POST(request) {
 
 export async function GET() {
   try {
-    const result = await prisma.product.findMany({
-      select: {
-        id: true,
-        title: true,
-        description: true,
-      },
-    })
+    const result = await prisma.product.findMany()
 
     if (!result)
       return NextResponse.json(
-        { error: 'No se encontraron categorías' },
+        { error: 'No se encontraron marcas' },
         { status: 400 }
       )
 

@@ -18,9 +18,7 @@ export default function RootLayout({ children }) {
           <div className='border-b mb-4'>
             <Navbar />
           </div>
-          <Container>
-            <main>{children}</main>
-          </Container>
+          <Container>{children}</Container>
         </div>
       </body>
     </html>

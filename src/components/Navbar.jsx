@@ -24,12 +24,12 @@ const navLinks = [
 export const Navbar = () => {
   return (
     <header className='flex justify-between items-center h-16 max-w-7xl mx-auto px-2 xl:px-0'>
-      <h1>PopaShop</h1>
+      <Link href='/'>PopaShop</Link>
 
       <nav>
         <ul className='flex gap-x-2'>
           {navLinks.map(({ title, href }) => (
-            <li key={`${title}-${href}`}>
+            <li key={title + href}>
               <Link
                 href={href}
                 className={buttonVariants({ variant: 'link' })}
