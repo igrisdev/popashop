@@ -3,6 +3,8 @@ export default async function page() {
     method: 'GET',
   }).then((res) => res.json())
 
+  console.log(res);
+
   return <div>item</div>
 }
 
