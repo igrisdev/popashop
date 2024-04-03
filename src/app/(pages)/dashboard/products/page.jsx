@@ -3,13 +3,7 @@ export default async function page() {
     method: 'GET',
   }).then((res) => res.json())
 
-  return (
-    <div>
-      {res.results.map((item) => (
-        <p key={item.id}>{item.name}</p>
-      ))}
-    </div>
-  )
+  return <div>item</div>
 }
 
 /* import axios from '@/lib/axios'
