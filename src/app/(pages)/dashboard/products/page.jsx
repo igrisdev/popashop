@@ -6,7 +6,7 @@ export default async function page() {
   return (
     <div>
       {res.results.map((item) => (
-        <p>{item.name}</p>
+        <p key={item.id}>{item.name}</p>
       ))}
     </div>
   )
