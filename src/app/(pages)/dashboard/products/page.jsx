@@ -1,17 +1,13 @@
-// import axios from '@/lib/axios'
-import axios from 'axios'
+import axios from '@/lib/axios'
 
 export default async function page() {
-  const res = await axios.get('http://localhost:3000/api/product')
+  const res = await axios.get('/api/product')
 
-  console.log(res)
-
-  // const { data } = res
-  const data = []
+  const { data } = res
 
   return (
     <div>
-      {data.results?.map((item) => (
+      {data.map((item) => (
         <div key={item.id}>
           <p>{item.name}</p>
         </div>
