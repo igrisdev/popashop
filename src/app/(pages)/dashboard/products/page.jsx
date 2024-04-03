@@ -1,13 +1,17 @@
+// import axios from '@/lib/axios'
 import axios from 'axios'
 
 export default async function page() {
-  const res = await axios.get('https://rickandmortyapi.com/api/character')
+  const res = await axios.get('http://localhost:3000/api/product')
 
-  const { data } = res
+  console.log(res)
+
+  // const { data } = res
+  const data = []
 
   return (
     <div>
-      {data.results.map((item) => (
+      {data.results?.map((item) => (
         <div key={item.id}>
           <p>{item.name}</p>
         </div>
@@ -15,12 +19,3 @@ export default async function page() {
     </div>
   )
 }
-
-/* import axios from '@/lib/axios'
-
-export default async function page() {
-  const products = await axios.get('/api/product')
-
-  return <div>page3</div>
-}
- */

@@ -55,14 +55,13 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Error Interno' }, { status: 500 })
   }
 }
-
 export async function GET() {
   try {
     const result = await prisma.product.findMany()
 
     if (!result)
       return NextResponse.json(
-        { error: 'No se encontraron marcas' },
+        { error: 'No se encontraron productos' },
         { status: 400 }
       )
 
