@@ -1,13 +1,13 @@
-export default async function page() {
-  const res = await fetch('https://rickandmortyapi.com/api/character', {
-    method: 'GET',
-  }).then((res) => res.json())
+import axios from 'axios'
 
-  const { results } = res
+export default async function page() {
+  const res = await axios.get('https://rickandmortyapi.com/api/character')
+
+  const { data } = res
 
   return (
     <div>
-      {results.map((item) => (
+      {data.results.map((item) => (
         <div key={item.id}>
           <p>{item.name}</p>
         </div>
