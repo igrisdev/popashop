@@ -52,7 +52,7 @@ export async function POST(request) {
     )
   } catch (error) {
     console.log(error)
-    return NextResponse.json.json({ error: 'Error Interno' }, { status: 500 })
+    return NextResponse.json({ error: 'Error Interno' }, { status: 500 })
   }
 }
 
@@ -68,6 +68,6 @@ export async function GET() {
 
     return NextResponse.json(result, { status: 200 })
   } catch (error) {
-    return NextResponse.json.json({ error: 'Error Interno' }, { status: 500 })
+    return NextResponse.json({ error: 'Error Interno' }, { status: 500 })
   }
 }
