@@ -1,21 +1,24 @@
 // import axios from '@/lib/axios'
 import axios from 'axios'
 
-// n6
+// n7
 
 export default async function page() {
-  // const res = await axios.get('/api/category')
-  const res = await axios.get('http://localhost:3000/api/product')
+  // const res = await axios.get('/api/product')
+  // const res = await axios.get('http://localhost:3000/api/product')
 
-  /* const res = await fetch('https://rickandmortyapi.com/api/character', {
+  const res = await fetch('http://localhost:3000/api/product', {
     method: 'GET',
-  }).then((res) => res.json()) */
+  }).then((res) => res.json())
 
-  const { data } = res
+  // console.log(data)
+  // const { data } = res
   // const { results: data } = res.data
 
-  console.log(data)
   // const data = res.results
+  const data = res
+
+  console.log(res);
 
   return (
     <div>
