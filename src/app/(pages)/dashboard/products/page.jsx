@@ -1,5 +1,5 @@
-export default function page() {
-  return <div>page2</div>
+export default async function page() {
+  return <div>page3</div>
 }
 
 /* import axios from '@/lib/axios'
