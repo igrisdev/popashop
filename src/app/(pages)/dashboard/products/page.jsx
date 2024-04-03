@@ -1,5 +1,15 @@
 export default async function page() {
-  return <div>page3</div>
+  const res = await fetch('https://rickandmortyapi.com/api/character', {
+    method: 'GET',
+  }).then((res) => res.json())
+
+  return (
+    <div>
+      {res.results.map((item) => (
+        <p>{item.name}</p>
+      ))}
+    </div>
+  )
 }
 
 /* import axios from '@/lib/axios'
