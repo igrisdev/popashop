@@ -1,13 +1,13 @@
 // import axios from '@/lib/axios'
 import axios from 'axios'
 
-// n7
+// n8
 
 export default async function page() {
   // const res = await axios.get('/api/product')
   // const res = await axios.get('http://localhost:3000/api/product')
 
-  const res = await fetch('http://localhost:3000/api/product', {
+  const res = await fetch('http://localhost:3000/api/category', {
     method: 'GET',
   }).then((res) => res.json())
 
@@ -24,7 +24,7 @@ export default async function page() {
     <div>
       {data.map((item) => (
         <div key={item.id}>
-          <p>{item.name}</p>
+          <p>{item.title}</p>
         </div>
       ))}
     </div>
