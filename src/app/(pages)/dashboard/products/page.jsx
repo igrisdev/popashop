@@ -1,10 +1,9 @@
 'use client'
 
+import { useEffect, useState } from 'react'
 import axios from '@/lib/axios'
 
-import { useEffect, useState } from 'react'
-
-export default function page() {
+export default function products() {
   const [products, setProducts] = useState([])
 
   const getProducts = async () => {
@@ -17,13 +16,5 @@ export default function page() {
     getProducts()
   }, [])
 
-  return (
-    <div>
-      {products?.map((item) => (
-        <div key={item.id}>
-          <p>{item.name}</p>
-        </div>
-      ))}
-    </div>
-  )
+  return <div>a</div>
 }
