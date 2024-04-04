@@ -1,30 +1,29 @@
-// import axios from '@/lib/axios'
-import axios from 'axios'
+'use client'
 
-// n8
+import { useEffect, useState } from 'react'
 
-export default async function page() {
-  // const res = await axios.get('/api/product')
-  // const res = await axios.get('http://localhost:3000/api/product')
+import axios from '@/lib/axios'
 
-  const res = await fetch('http://localhost:3000/api/category', {
-    method: 'GET',
-  }).then((res) => res.json())
+export default function page() {
+  const [products, setProducts] = useState([])
 
-  // console.log(data)
-  // const { data } = res
-  // const { results: data } = res.data
+  const getProducts = async () => {
+    const res = await axios.get('/api/product')
 
-  // const data = res.results
-  const data = res
+    setProducts(res.data)
+  }
 
-  console.log(res);
+  useEffect(() => {
+    getProducts()
+  }, [])
+
+  console.log(products)
 
   return (
     <div>
-      {data.map((item) => (
+      {products.map((item) => (
         <div key={item.id}>
-          <p>{item.title}</p>
+          <p>{item.name}</p>
         </div>
       ))}
     </div>

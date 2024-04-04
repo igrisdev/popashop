@@ -55,9 +55,23 @@ export async function POST(request) {
     return NextResponse.json({ error: 'Error Interno' }, { status: 500 })
   }
 }
+
 export async function GET() {
   try {
-    const result = await prisma.product.findMany()
+    const result = await prisma.product.findMany({
+      /* select: {
+        id: true,
+        name: true,
+      }, */
+      include: {
+        category: true,
+        size: true,
+        color: true,
+        images: true,
+      },
+    })
+
+    // console.log(result)
 
     if (!result)
       return NextResponse.json(
