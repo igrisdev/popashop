@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 /*
 import axios from '@/lib/axios' */
 
-export default function products() {
+export default function Products() {
   const [products, setProducts] = useState([])
 
   /*
