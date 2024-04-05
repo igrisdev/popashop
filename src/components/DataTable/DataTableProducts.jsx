@@ -161,8 +161,9 @@ export const columns = [
       return (
         <div className='text-center font-medium flex gap-2 flex-col'>
           {row.getValue('color').map((cate) => {
-            return cate.map((item) => (
+            return cate.map((i, item) => (
               <div
+                key={i + item}
                 style={{ background: `${item}` }}
                 className={`w-4 h-4`}
               ></div>
