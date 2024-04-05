@@ -38,6 +38,8 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { toast } from 'sonner'
+import Image from 'next/image'
+import { Badge } from '../ui/badge'
 
 // name, brand, description, quantity, price, images, category, color, size
 export const columns = [
@@ -83,6 +85,7 @@ export const columns = [
     header: ({ column }) => {
       return (
         <Button
+          className='w-full'
           variant='ghost'
           onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
         >
@@ -97,10 +100,10 @@ export const columns = [
   },
   {
     accessorKey: 'description',
-    header: () => <div className='text-right'>Descripción</div>,
+    header: () => <div className='text-center'>Descripción</div>,
     cell: ({ row }) => {
       return (
-        <div className='text-right font-medium'>
+        <div className='text-center font-medium'>
           {row.getValue('description')}
         </div>
       )
@@ -108,28 +111,64 @@ export const columns = [
   },
   {
     accessorKey: 'images',
-    header: () => <div className='text-right'>Imágenes</div>,
+    header: () => <div className='text-center'>Imágenes</div>,
     cell: ({ row }) => {
+      const imageUrl = row.getValue('images')
+
       return (
-        <div className='text-right font-medium'>{row.getValue('images')}</div>
+        <div className='flex gap-2 overflow-auto'>
+          {imageUrl.map((urls) => {
+            return urls.map((url) => (
+              <Image
+                key={url}
+                src={url}
+                alt='product image'
+                className='rounded-md object-cover w-[100px] h-[100px]'
+                width={100}
+                height={100}
+              />
+            ))
+          })}
+        </div>
       )
     },
   },
   {
     accessorKey: 'category',
-    header: () => <div className='text-right'>Categorías</div>,
+    header: () => <div className='text-center'>Categorías</div>,
     cell: ({ row }) => {
       return (
-        <div className='text-right font-medium'>{row.getValue('category')}</div>
+        <div className='text-center font-medium flex gap-2 flex-col'>
+          {row.getValue('category').map((cate) => {
+            // console.log(cate)
+            return cate.map((item) => (
+              <Badge
+                key={item}
+                className={'w-full text-center'}
+              >
+                {item}
+              </Badge>
+            ))
+          })}
+        </div>
       )
     },
   },
   {
     accessorKey: 'color',
-    header: () => <div className='text-right'>Colores</div>,
+    header: () => <div className='text-center'>Colores</div>,
     cell: ({ row }) => {
       return (
-        <div className='text-right font-medium'>{row.getValue('color')}</div>
+        <div className='text-center font-medium flex gap-2 flex-col'>
+          {row.getValue('color').map((cate) => {
+            return cate.map((item) => (
+              <div
+                style={{ background: `${item}` }}
+                className={`w-4 h-4`}
+              ></div>
+            ))
+          })}
+        </div>
       )
     },
   },
@@ -152,16 +191,16 @@ export const columns = [
   },
   {
     accessorKey: 'price',
-    header: () => <div className='text-right'>Amount</div>,
+    header: () => <div className='text-center'>Precio</div>,
     cell: ({ row }) => {
       const price = parseFloat(row.getValue('price'))
-
+      /*
       const formatted = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
-      }).format(price)
+      }).format(price) */
 
-      return <div className='text-right font-medium'>{formatted}</div>
+      return <div className='text-center font-medium'>${price}</div>
     },
   },
   {
@@ -206,23 +245,28 @@ export const DataTableProducts = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
+  console.log(data)
+
   const getProducts = async () => {
     try {
       setLoading(true)
       const res = await axios.get('/api/product')
 
       setData(
-        res.data.map((product) => ({
-          id: product.id,
-          name: product.name,
-          brand: product.brandId,
-          description: product.description,
-          images: product.images.toString(),
-          category: product.category.toString(),
-          color: product.color.toString(),
-          quantity: product.quantity,
-          price: product.price,
-        }))
+        res.data.map((product) => {
+          // console.log(product)
+          return {
+            id: product.id,
+            name: product.name,
+            brand: product.brandId,
+            description: product.description,
+            images: [product.images.map((image) => image.url)],
+            category: [product.category.map((category) => category.title)],
+            color: [product.color.map((color) => color.color)],
+            quantity: product.quantity,
+            price: product.price,
+          }
+        })
       )
     } catch (error) {
       toast.error(error.message)
