@@ -16,5 +16,5 @@ export default function Products() {
     getProducts()
   }, [])
 
-  return <div>af</div>
+  return <div>a</div>
 }
