@@ -1,10 +1,10 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import axios from '@/lib/axios'
+/* import { useEffect, useState } from 'react'
+import axios from '@/lib/axios' */
 
 export default function products() {
-  const [products, setProducts] = useState([])
+  /* const [products, setProducts] = useState([])
 
   const getProducts = async () => {
     const res = await axios.get('/api/product')
@@ -14,7 +14,7 @@ export default function products() {
 
   useEffect(() => {
     getProducts()
-  }, [])
+  }, []) */
 
   return <div>a</div>
 }
