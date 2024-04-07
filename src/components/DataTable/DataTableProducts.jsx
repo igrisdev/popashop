@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import axios from '@/lib/axios'
+import { axios } from '@/lib/axios'
 
 import {
   ColumnDef,
@@ -163,7 +163,7 @@ export const columns = [
           {row.getValue('color').map((cate) => {
             return cate.map((item, index) => (
               <div
-                style={{ 'background-color': `${item}` }}
+                style={{ backgroundColor: `${item}` }}
                 key={index + item}
                 className={`w-6 h-6 rounded-full`}
               ></div>
@@ -210,6 +210,23 @@ export const columns = [
     cell: ({ row }) => {
       const payment = row.original
 
+      const deleteProductHandle = async (id) => {
+        try {
+          const res = await axios.delete(`/api/product/${id}`)
+
+          if (!res.status === 500) return toast.error(res.data.error)
+
+          /* setData((pevProducts) =>
+            pevProducts.filter(
+              (pevProduct) => pevProduct.id !== res.data.product
+            )
+          ) */
+          return toast.success(res.data.message)
+        } catch (error) {
+          return toast.error(error.response?.data.error)
+        }
+      }
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -217,20 +234,19 @@ export const columns = [
               variant='ghost'
               className='h-8 w-8 p-0'
             >
-              <span className='sr-only'>Open menu</span>
               <MoreHorizontal className='h-4 w-4' />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align='end'>
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem onClick={() => deleteProductHandle(payment.id)}>
+              Eliminar
+            </DropdownMenuItem>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Actualizar
             </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -246,8 +262,6 @@ export const DataTableProducts = () => {
   const [loading, setLoading] = useState(true)
   const [data, setData] = useState([])
 
-  console.log(data)
-
   const getProducts = async () => {
     try {
       setLoading(true)
@@ -255,7 +269,6 @@ export const DataTableProducts = () => {
 
       setData(
         res.data.map((product) => {
-          // console.log(product)
           return {
             id: product.id,
             name: product.name,

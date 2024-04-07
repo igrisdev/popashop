@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import axios from '@/lib/axios'
+import { axios } from '@/lib/axios'
 
 const formSchemaSize = z.object({
   size: z.string().min(1, {

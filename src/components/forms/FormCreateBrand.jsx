@@ -17,7 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 
-import axios from '@/lib/axios'
+import { axios } from '@/lib/axios'
 
 const formSchemaBrand = z.object({
   title: z.string().min(1, {

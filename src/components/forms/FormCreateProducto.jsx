@@ -28,7 +28,7 @@ import {
 
 import { CreateImages } from '@/components/createImagesCloudinary/CreateImages'
 
-import axios from '@/lib/axios'
+import { axios } from '@/lib/axios'
 
 const formSchemaProduct = z.object({
   name: z.string().min(2, {
