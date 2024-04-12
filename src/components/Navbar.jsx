@@ -24,7 +24,7 @@ const navLinks = [
 export const Navbar = () => {
   return (
     <header className='flex justify-between items-center h-16 max-w-7xl mx-auto px-2 xl:px-0'>
-      <Link href='/'>PopaShop</Link>
+      {/* <Link href='/'>PopaShop</Link> */}
 
       <nav>
         <ul className='flex gap-x-2'>
